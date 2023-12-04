@@ -37,24 +37,48 @@ class Calculator {
         if (isNaN(prev) || isNaN(current)) return
         switch (this.operation) {
             case '+':
-                let result = await fetch(`/calculator/add?num1=${prev}&num2=${current}`)
+                let sum = await fetch(`/calculator/add?num1=${prev}&num2=${current}`)
                 .then(response => response.json())
                 .then(data => {
                     // console.log(data)
                     return data.result
                 })
-                computation = result
+                computation = sum
                 // console.log(prev, current)
-                console.log(result)
+                console.log(sum)
                 break
             case '-':
-                computation = prev - current
+                let difference = await fetch(`/calculator/subtract?num1=${prev}&num2=${current}`)
+                .then(response => response.json())
+                .then(data => {
+                    // console.log(data)
+                    return data.result
+                })
+                computation = difference
+                // console.log(prev, current)
+                console.log(difference)
                 break
             case '*':
-                computation = prev * current
+                let product = await fetch(`/calculator/multiply?num1=${prev}&num2=${current}`)
+                .then(response => response.json())
+                .then(data => {
+                    // console.log(data)
+                    return data.result
+                })
+                computation = product
+                // console.log(prev, current)
+                console.log(product)
                 break
             case '÷':
-                computation = prev / current
+                let quotient = await fetch(`/calculator/divide?num1=${prev}&num2=${current}`)
+                .then(response => response.json())
+                .then(data => {
+                    // console.log(data)
+                    return data.result
+                })
+                computation = quotient
+                // console.log(prev, current)
+                console.log(quotient)
                 break
             default:
                 return
@@ -62,6 +86,7 @@ class Calculator {
         this.currentOperand = computation
         this.operation = undefined
         this.previousOperand = ''
+        this.updateDisplay()
     }
 
     getDisplayNumber(number) {
@@ -120,7 +145,6 @@ operationButtons.forEach(button => {
 
 equalsButton.addEventListener('click', button => {
     calculator.compute()
-    calculator.updateDisplay()
 })
 
 
